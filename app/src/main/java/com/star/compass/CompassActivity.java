@@ -63,7 +63,7 @@ public class CompassActivity extends AppCompatActivity {
 
         mRotation = display.getRotation();
 
-        updateOrientation(new float[] {0, 0, 0});
+        updateOrientation(new float[]{0, 0, 0});
     }
 
     @Override
@@ -74,18 +74,19 @@ public class CompassActivity extends AppCompatActivity {
         Sensor magnetic = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
         mSensorManager.registerListener(mSensorEventListener2, accelerometer,
-                SensorManager.SENSOR_DELAY_FASTEST);
+                SensorManager.SENSOR_DELAY_GAME);
 
         mSensorManager.registerListener(mSensorEventListener2, magnetic,
-                SensorManager.SENSOR_DELAY_FASTEST);
+                SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
     protected void onPause() {
-
-        mSensorManager.unregisterListener(mSensorEventListener2);
-
         super.onPause();
+
+        if (mSensorEventListener2 != null) {
+            mSensorManager.unregisterListener(mSensorEventListener2);
+        }
     }
 
     private void updateOrientation(float[] values) {
@@ -125,7 +126,7 @@ public class CompassActivity extends AppCompatActivity {
 
         SensorManager.remapCoordinateSystem(inR, xAxis, yAxis, outR);
 
-        SensorManager.getOrientation(outR, values);
+        SensorManager.getOrientation(inR, values);
 
         values[0] = (float) Math.toDegrees(values[0]);
         values[1] = (float) Math.toDegrees(values[1]);

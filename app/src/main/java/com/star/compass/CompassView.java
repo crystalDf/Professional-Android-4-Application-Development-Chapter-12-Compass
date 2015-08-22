@@ -288,11 +288,9 @@ public class CompassView extends View {
         for (int i = 90; i >= -90; i -= 10) {
             double yPos = justTiltY + i * pxPerDegree;
 
-            if (yPos < (innerBoundingBox.top + mTextHeight) ||
-                    yPos > (innerBoundingBox.bottom - mTextHeight)) {
-                continue;
-            }
-            {
+            if (yPos >= (innerBoundingBox.top + mTextHeight) &&
+                    yPos <= (innerBoundingBox.bottom - mTextHeight)) {
+
                 canvas.drawLine(startX, (float) yPos, endX, (float) yPos, mMarkerPaint);
 
                 int displayPos = (int) (tiltDegree - i);
